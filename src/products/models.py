@@ -3,6 +3,7 @@ import random
 import os
 from django.db.models.signals import pre_save, post_save
 from products.utils import unique_slug_generator
+from django.urls import reverse
 
 # Create your models here.
 
@@ -45,6 +46,8 @@ class ProductManager(models.Manager):
         if qs.count() == 1:
             return qs.first()
         return None
+
+        
 class Product(models.Model):
     title = models.CharField(max_length=120)
     slug = models.SlugField(blank=True,unique=True)
@@ -57,7 +60,8 @@ class Product(models.Model):
     objects = ProductManager()
 
     def get_absolute_url(self):
-        return "/products/{slug}/".format(slug=self.slug)
+        # return "/products/{slug}/".format(slug=self.slug)
+        return reverse("products:detail",kwargs={"slug":self.slug})
 
 
     def __str__(self):

@@ -37,11 +37,11 @@ def login_page(request):
         "form" : form
     }
     if form.is_valid():
-        user = authenticate(request, username=username, password=password)
+        user = authenticate(request, username='username', password='password')
         if user is not None:
             login(request, user)
 
-            return redirect("/login")
+            return redirect("/")
         else:
             print("Error")
 
